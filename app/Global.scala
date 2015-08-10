@@ -2,7 +2,7 @@ import java.lang.reflect.Constructor
 import securesocial.core.RuntimeEnvironment
 import securesocial.core.authenticator._
 import securesocial.core.services._
-import service.{MyEventListener, InMemoryUserService, WSAuthenticatorBuilder}
+import service.{MyEventListener, InMemoryUserService, WSAuthenticatorBuilder, CustomRoutesService}
 import models.User
 import play.api.{Application, GlobalSettings}
 
@@ -19,6 +19,7 @@ object Global extends GlobalSettings {
       new CookieAuthenticatorBuilder[User.User](new AuthenticatorStore.Default(cacheService), idGenerator),
       new WSAuthenticatorBuilder[User.User](new AuthenticatorStore.Default(cacheService), idGenerator)
     )
+    override lazy val routes: RoutesService = new CustomRoutesService()
   }
 
   /**
